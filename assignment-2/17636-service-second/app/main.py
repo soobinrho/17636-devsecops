@@ -27,9 +27,14 @@ def main():
     cache_list_lines_romeo_and_juliet = None
     sig_term_handler = class_sig_term_handler()
     while not sig_term_handler.kill_now:
-        # Wait until the first service sends the parameters.
-        # Example: [keyword, list_lines_romeo_and_juliet]
-        shared_list_input = ShareableList(name=IPC_SHAREABLE_LIST_NAME_INPUT)
+        shared_list_input = None
+        try:
+            # Wait until the first service sends the parameters.
+            # Example: [keyword, list_lines_romeo_and_juliet]
+            shared_list_input = ShareableList(name=IPC_SHAREABLE_LIST_NAME_INPUT)
+        except FileNotFoundError:
+            time.sleep(SECONDS_LISTEN_INTERVAL)
+            continue
         keyword = None
         list_lines_romeo_and_juliet = None
         if 1 < len(shared_list_input):

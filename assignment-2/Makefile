@@ -2,7 +2,10 @@
 
 GIT_HASH := $(shell git rev-parse --short HEAD)
 
-assignment-2:	build run test
+assignment-2:	cleanup build run test
+
+cleanup: 
+	docker compose down --remove-orphans
 
 build:
 	cd ./17636-service-first/ && \
@@ -12,10 +15,9 @@ build:
 		docker build -t soobinrho/17636-service-second:latest \
 		-t soobinrho/17636-service-second:$(GIT_HASH) .
 
-
 run:
-	docker compose up --detach --wait
-
+	docker compose up --detach
+	docker compose wait service-first
 
 test:
 	curl http://127.0.0.1/romeo-and-juliet/thy
