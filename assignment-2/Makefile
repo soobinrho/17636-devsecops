@@ -14,11 +14,7 @@ build:
 
 
 run:
-	docker run --detach --name 17636-service-first \
-		-p 80:80 \
-		--add-host host.docker.internal:host-gateway \
-		--env IS_DEV='1' \
-		soobinrho/17636-service-first:latest
+# 	docker compose
 
 
 test:

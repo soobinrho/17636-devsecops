@@ -9,13 +9,12 @@ from .wrapper_second_service import (
 )
 
 PATH_ROMEO_AND_JULIET = "./pg1513.txt"
+list_lines_romeo_and_juliet = []
+
 
 # In FastAPI, the optimal way to load the Romeo and Juliet text is to initialize
 # it as a part of FastAPI lifespan.
 # Reference: https://fastapi.tiangolo.com/advanced/events/#lifespan
-list_lines_romeo_and_juliet = []
-
-
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     path_romeo_and_juliet = Path(PATH_ROMEO_AND_JULIET)
@@ -45,7 +44,7 @@ def is_valid_search_keyword(keyword: str) -> bool:
     "/romeo-and-juliet/{keyword}",
     status_code=status.HTTP_200_OK,
 )
-def get_grep_matched_lines(keyword: str):
+async def get_grep_matched_lines(keyword: str):
     if not is_valid_search_keyword(keyword):
         return JSONResponse(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -57,3 +56,11 @@ def get_grep_matched_lines(keyword: str):
     if matched_lines is None:
         return Response(status_code=status.HTTP_204_NO_CONTENT)
     return matched_lines
+
+
+@app.get(
+    "/status",
+    status_code=status.HTTP_200_OK,
+)
+async def get_status(response: Response):
+    return JSONResponse(content="OK", headers={"Content-Type": "text/plain"})

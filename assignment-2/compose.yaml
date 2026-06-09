@@ -1,0 +1,15 @@
+services:
+  service-first:
+    image: soobinrho/17636-service-first:latest
+    ports:
+      - "80:80"
+    healthcheck:
+      test: [ "CMD", "curl", "--fail", "http://127.0.0.1/status" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 1m
+      start_interval: 5s
+
+  service-second:
+    image: soobinrho/17636-service-second:latest
