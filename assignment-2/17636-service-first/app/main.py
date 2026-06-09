@@ -8,7 +8,7 @@ from .wrapper_second_service import (
     get_grep_matched_lines_from_second_service,
 )
 
-PATH_ROMEO_AND_JULIET = "./pg1513.txt"
+PATH_ROMEO_AND_JULIET = "./app/pg1513.txt"
 list_lines_romeo_and_juliet = []
 
 
