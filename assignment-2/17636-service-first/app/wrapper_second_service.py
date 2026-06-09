@@ -20,9 +20,11 @@ def get_grep_matched_lines_from_second_service(
     shared_list_output = None
     retry_count = 0
     while retry_count < RETRY_MAX and shared_list_output is None:
-        shared_list_output = ShareableList(name=IPC_SHAREABLE_LIST_NAME_OUTPUT)
-        time.sleep(SECONDS_RETRY_INTERVAL)
-        retry_count += 1
+        try:
+            shared_list_output = ShareableList(name=IPC_SHAREABLE_LIST_NAME_OUTPUT)
+        except FileNotFoundError:
+            time.sleep(SECONDS_RETRY_INTERVAL)
+            retry_count += 1
 
     shared_list_input.shm.close()
     shared_list_input.shm.unlink()
