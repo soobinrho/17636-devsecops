@@ -1,0 +1,7 @@
+[project]
+name = "17636-service-second"
+version = "0.1.0"
+description = "Communicates with 17636-service-first via IPC (Python shared_memory)."
+readme = ""
+requires-python = ">=3.14"
+dependencies = []

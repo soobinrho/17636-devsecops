@@ -26,9 +26,9 @@ def get_grep_matched_lines_from_second_service(
 
     shared_list_input.shm.close()
     shared_list_input.shm.unlink()
-    matched_lines = []
+    list_matched_lines = []
     if 0 < len(shared_list_output):
-        matched_lines = list(shared_list_output)
+        list_matched_lines = list(shared_list_output)
     else:
         print(
             f"[ERROR] len(shared_list_output) = 0 and RETRY_MAX = {RETRY_MAX:,} reached."
@@ -36,6 +36,6 @@ def get_grep_matched_lines_from_second_service(
     shared_list_output.shm.close()
     shared_list_output.shm.unlink()
 
-    if len(matched_lines) == 0:
+    if len(list_matched_lines) == 0:
         return None
-    return matched_lines
+    return list_matched_lines
