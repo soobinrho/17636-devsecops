@@ -10,6 +10,8 @@ services:
       retries: 3
       start_period: 1m
       start_interval: 5s
+    ipc: shareable
 
   service-second:
     image: soobinrho/17636-service-second:latest
+    ipc: service:service-first

@@ -62,5 +62,5 @@ async def get_grep_matched_lines(keyword: str):
     "/status",
     status_code=status.HTTP_200_OK,
 )
-async def get_status(response: Response):
+async def get_healthcheck_status(response: Response):
     return JSONResponse(content="OK", headers={"Content-Type": "text/plain"})

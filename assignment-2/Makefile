@@ -14,7 +14,7 @@ build:
 
 
 run:
-# 	docker compose
+	docker compose up --detach --wait
 
 
 test:
