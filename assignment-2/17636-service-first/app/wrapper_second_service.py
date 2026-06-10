@@ -35,8 +35,9 @@ def get_grep_matched_lines_from_second_service(
         print(
             f"[ERROR] len(shared_list_output) = 0 and RETRY_MAX = {RETRY_MAX:,} reached."
         )
-    shared_list_output.shm.close()
-    shared_list_output.shm.unlink()
+    if shared_list_output is not None:
+        shared_list_output.shm.close()
+        shared_list_output.shm.unlink()
 
     if list_matched_lines is None or len(list_matched_lines) == 0:
         return None
