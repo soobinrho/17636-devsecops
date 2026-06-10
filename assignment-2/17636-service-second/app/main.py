@@ -56,8 +56,8 @@ def main():
             list_matched_lines = []
             print(f"[INFO] Searching for keyword = {keyword}")
             for line in list_lines_romeo_and_juliet:
-                line = str(line).lower()
-                if keyword in line:
+                line = str(line)
+                if keyword in line.lower():
                     list_matched_lines.append(line)
             if 0 < len(list_matched_lines):
                 try:
