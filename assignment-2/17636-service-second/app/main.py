@@ -4,7 +4,7 @@ from multiprocessing.shared_memory import ShareableList
 
 IPC_SHAREABLE_LIST_NAME_INPUT = "17636-service-second-input"
 IPC_SHAREABLE_LIST_NAME_OUTPUT = "17636-service-second-output"
-SECONDS_LISTEN_INTERVAL = 0.3
+SECONDS_LISTEN_INTERVAL = 0.1
 
 
 # Handle SIGTERM. Without this, the container cannot exit gracefully.
@@ -23,8 +23,6 @@ class class_sig_term_handler:
 def main():
     print("[INFO] Starting to listen for 17636-service-first")
 
-    cache_keyword = None
-    cache_list_lines_romeo_and_juliet = None
     sig_term_handler = class_sig_term_handler()
     while not sig_term_handler.kill_now:
         shared_list_input = None
@@ -50,18 +48,9 @@ def main():
             print(
                 f"[ERROR] 1 < len(shared_list_input) expected but got {shared_list_input}"
             )
+        shared_list_input.shm.unlink()
 
         if keyword is not None and list_lines_romeo_and_juliet is not None:
-            # If the cached values and the current values are the same, that means
-            # that the output values don't have to be recalculated.
-            if (
-                keyword == cache_keyword
-                and list_lines_romeo_and_juliet == cache_list_lines_romeo_and_juliet
-            ):
-                continue
-            cache_keyword = keyword
-            cache_list_lines_romeo_and_juliet = list_lines_romeo_and_juliet
-
             # Perform grep.
             keyword = str(keyword).lower()
             list_matched_lines = []
@@ -71,10 +60,20 @@ def main():
                 if keyword in line:
                     list_matched_lines.append(line)
             if 0 < len(list_matched_lines):
-                shared_list_output = ShareableList(
-                    list_matched_lines, name=IPC_SHAREABLE_LIST_NAME_OUTPUT
-                )
-                shared_list_output.shm.close()
+                try:
+                    shared_list_output = ShareableList(
+                        list_matched_lines, name=IPC_SHAREABLE_LIST_NAME_OUTPUT
+                    )
+                    shared_list_output.shm.close()
+                except FileExistsError:
+                    shared_list_output = ShareableList(
+                        name=IPC_SHAREABLE_LIST_NAME_OUTPUT
+                    )
+                    shared_list_output.shm.unlink()
+                    shared_list_output = ShareableList(
+                        list_matched_lines, name=IPC_SHAREABLE_LIST_NAME_OUTPUT
+                    )
+                    shared_list_output.shm.close()
                 print(f"[INFO] Found {len(list_matched_lines):,} matches.")
 
         time.sleep(SECONDS_LISTEN_INTERVAL)
