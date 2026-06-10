@@ -39,7 +39,9 @@ def main():
         list_lines_romeo_and_juliet = None
         if 1 < len(shared_list_input):
             keyword = shared_list_input[0]
-            list_lines_romeo_and_juliet = shared_list_input[1:]
+            list_lines_romeo_and_juliet = []
+            for i in range(1, len(shared_list_input)):
+                list_lines_romeo_and_juliet.append(shared_list_input[i])
         elif len(shared_list_input) == 1:
             print(
                 f"[ERROR] 1 < len(shared_list_input) expected but got {shared_list_input}"
