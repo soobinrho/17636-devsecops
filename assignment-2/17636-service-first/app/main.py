@@ -20,9 +20,9 @@ async def lifespan(app: FastAPI):
     path_romeo_and_juliet = Path(PATH_ROMEO_AND_JULIET)
     if not path_romeo_and_juliet.is_file():
         raise Exception(f"[ERROR] {PATH_ROMEO_AND_JULIET} not found.")
-    with open(PATH_ROMEO_AND_JULIET, "r", encoding="UTF-8") as f:
+    with open(PATH_ROMEO_AND_JULIET, "r", encoding="UTF-8", errors="ignore") as f:
         for line in f:
-            list_lines_romeo_and_juliet.append(line.rstrip())
+            list_lines_romeo_and_juliet.append(str(line).strip())
     yield
 
 

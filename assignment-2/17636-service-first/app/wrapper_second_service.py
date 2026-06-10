@@ -27,7 +27,6 @@ def get_grep_matched_lines_from_second_service(
             retry_count += 1
 
     shared_list_input.shm.close()
-    shared_list_input.shm.unlink()
     list_matched_lines = None
     if shared_list_output is not None and 0 < len(shared_list_output):
         list_matched_lines = list(shared_list_output)
@@ -37,7 +36,6 @@ def get_grep_matched_lines_from_second_service(
         )
     if shared_list_output is not None:
         shared_list_output.shm.close()
-        shared_list_output.shm.unlink()
 
     if list_matched_lines is None or len(list_matched_lines) == 0:
         return None

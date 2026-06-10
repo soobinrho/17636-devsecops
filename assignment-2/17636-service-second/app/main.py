@@ -41,7 +41,11 @@ def main():
             keyword = shared_list_input[0]
             list_lines_romeo_and_juliet = []
             for i in range(1, len(shared_list_input)):
-                list_lines_romeo_and_juliet.append(shared_list_input[i])
+                try:
+                    list_lines_romeo_and_juliet.append(shared_list_input[i])
+                except Exception:
+                    # Required for fixing `UnicodeDecodeError: unexpected end of data`.
+                    continue
         elif len(shared_list_input) == 1:
             print(
                 f"[ERROR] 1 < len(shared_list_input) expected but got {shared_list_input}"

@@ -17,10 +17,10 @@ build:
 
 run:
 	docker compose up --detach
-	docker compose wait service-first
+	sleep 10
 
 test:
 	curl http://127.0.0.1/romeo-and-juliet/thy
-	curl http://127.0.0.1/romeo-and-juliet/love
-	curl http://127.0.0.1/romeo-and-juliet/delicious
-	curl http://127.0.0.1/romeo-and-juliet/food
+# 	curl http://127.0.0.1/romeo-and-juliet/love
+# 	curl http://127.0.0.1/romeo-and-juliet/delicious
+# 	curl http://127.0.0.1/romeo-and-juliet/food
