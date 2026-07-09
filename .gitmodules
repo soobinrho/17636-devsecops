@@ -1,3 +1,3 @@
-[submodule "17636-devsecops-industry-best-practices"]
+[submodule "industry-best-practices"]
 	path = industry-best-practices
 	url = https://github.com/soobinrho/17636-devsecops-industry-best-practices.git
